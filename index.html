@@ -140,20 +140,25 @@
     </div>
     <div class="row justify-content-center mb-3">
       <div class="col-md-6">
-        <form>
+        <form name="daitonp-contact-form">
           <div class="mb-3">
             <label for="Name" class="form-label">Nama lengkap</label>
-            <input type="text" class="form-control" id="name" aria-describedby="name">
+            <input type="text" class="form-control" id="name" aria-describedby="name" name="nama">
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email" aria-describedby="email">
+            <input type="email" class="form-control" id="email" aria-describedby="email" name="email">
           </div>
           <div class="mb-3">
             <label for="pesan" class="form-label">Pesan</label>
-            <textarea class="form-control" id="pesan" rows="3"></textarea>
+            <textarea class="form-control" id="pesan" rows="3" name="pesan"></textarea>
           </div>
-          <button type="submit" class="btn btn-success">Kirim</button>
+          <button type="submit" class="btn btn-primary btn-kirim">Kirim</button>
+          
+          <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+          </button>
         </form>
       </div>
     </div>
@@ -161,10 +166,23 @@
 </section>
 
 <!-- Footer -->
-<footer class="text-white text-center p-2" style="background-color: #d632ff">
+<footer class="text-white text-center p-4" style="background-color: #d632ff">
   <p>Created by <a href="https://www.pixiv.net/en/users/36208202" class="text-white fw-bold ">Tarasius G Pandito</a></p>
 </footer>    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwVXKksv3Yo45YqfASZ2bCYXfSr8oPE7GNw6FASJoZP4PN1LfMlTWto2bsmaYtvWFCy/exec'
+      const form = document.forms['daitonp-contact-form']
+    
+      form.addEventListener('submit', e => {
+        e.preventDefault()
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(response => console.log('Success!', response))
+          .catch(error => console.error('Error!', error.message))
+      })
+    </script>
+
   </body>
 </html>
